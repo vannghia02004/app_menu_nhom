@@ -42,6 +42,10 @@ public class TinhDienTichHinhTronGUI extends JFrame implements ActionListener {
         if (e.getSource() == btnTinh) {
             try {
                 double banKinh = Double.parseDouble(txtBanKinh.getText());
+                if (banKinh < 0) {
+                    lblKetQua.setText("Cảnh báo: Bán kính không được âm!");
+                    return;
+                }
                 double dienTich = Math.PI * banKinh * banKinh;
                 lblKetQua.setText("Diện tích: " + String.format("%.2f", dienTich)); // Định dạng hiển thị 2 chữ số thập phân
             } catch (NumberFormatException ex) {

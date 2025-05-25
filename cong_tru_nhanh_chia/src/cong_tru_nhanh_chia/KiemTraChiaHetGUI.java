@@ -49,8 +49,16 @@ public class KiemTraChiaHetGUI extends JFrame implements ActionListener {
                 int b = Integer.parseInt(txtB.getText());
 
                 if (b == 0) {
-                    lblKetQua.setText("Lỗi: Số b không được là 0.");
-                } else if (a % b == 0) {
+                    JOptionPane.showMessageDialog(this,
+                        "Không thể chia cho 0!\nVui lòng nhập số b khác 0.",
+                        "Lỗi chia cho 0",
+                        JOptionPane.ERROR_MESSAGE);
+                    lblKetQua.setText("Kết quả: Không thể chia cho 0");
+                    txtB.requestFocus();
+                    return;
+                }
+
+                if (a % b == 0) {
                     lblKetQua.setText(a + " chia hết cho " + b + ".");
                 } else {
                     lblKetQua.setText(a + " không chia hết cho " + b + ".");
