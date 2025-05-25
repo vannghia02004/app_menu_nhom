@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class TinhDienTichHinhTronGUI extends JFrame implements ActionListener {
 
@@ -14,24 +16,53 @@ public class TinhDienTichHinhTronGUI extends JFrame implements ActionListener {
     private final JLabel lblBanKinh;
     private final JLabel lblKetQua;
     private final JButton btnTinh;
+    private final JButton btnQuayLai;
+    private static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 14);
 
     public TinhDienTichHinhTronGUI() {
         setTitle("Tính Diện Tích Hình Tròn");
-        setSize(300, 150);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 200);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new FlowLayout());
+        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
+        // Set font for all components
         lblBanKinh = new JLabel("Nhập bán kính (r):");
+        lblBanKinh.setFont(DEFAULT_FONT);
         txtBanKinh = new JTextField(10);
+        txtBanKinh.setFont(DEFAULT_FONT);
         btnTinh = new JButton("Tính Diện Tích");
+        btnTinh.setFont(DEFAULT_FONT);
+        btnQuayLai = new JButton("Quay lại");
+        btnQuayLai.setFont(DEFAULT_FONT);
         lblKetQua = new JLabel("Diện tích:");
+        lblKetQua.setFont(DEFAULT_FONT);
 
         btnTinh.addActionListener(this);
+        btnQuayLai.addActionListener(this);
+
+        // Add window close listener
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int choice = JOptionPane.showConfirmDialog(
+                    TinhDienTichHinhTronGUI.this,
+                    "Bạn có chắc muốn thoát?",
+                    "Xác nhận thoát",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+                );
+                if (choice == JOptionPane.YES_OPTION) {
+                    dispose();
+                    new MainMenu().setVisible(true);
+                }
+            }
+        });
 
         add(lblBanKinh);
         add(txtBanKinh);
         add(btnTinh);
+        add(btnQuayLai);
         add(lblKetQua);
 
         setVisible(true);
@@ -47,10 +78,13 @@ public class TinhDienTichHinhTronGUI extends JFrame implements ActionListener {
                     return;
                 }
                 double dienTich = Math.PI * banKinh * banKinh;
-                lblKetQua.setText("Diện tích: " + String.format("%.2f", dienTich)); // Định dạng hiển thị 2 chữ số thập phân
+                lblKetQua.setText("Diện tích: " + String.format("%.2f", dienTich));
             } catch (NumberFormatException ex) {
                 lblKetQua.setText("Lỗi: Vui lòng nhập số hợp lệ.");
             }
+        } else if (e.getSource() == btnQuayLai) {
+            dispose();
+            new MainMenu().setVisible(true);
         }
     }
 

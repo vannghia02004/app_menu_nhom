@@ -5,10 +5,12 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainMenu extends JFrame {
+    private static final Font DEFAULT_FONT = new Font("Arial", Font.PLAIN, 14);
+    
     public MainMenu() {
         setTitle("Chọn chức năng");
         setSize(400, 500);  // Reduced size for better fit on smaller screens
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         
         // Create a panel with padding
@@ -24,6 +26,14 @@ public class MainMenu extends JFrame {
         JButton btnTinhThanhTien = new JButton("Tính thành tiền");
         JButton btnRectangleArea = new JButton("Tính diện tích hình chữ nhật");
 
+        // Set font for all buttons
+        btnBac1Bac2.setFont(DEFAULT_FONT);
+        btnCongTruNhanhChia.setFont(DEFAULT_FONT);
+        btnUCLN_BCNN.setFont(DEFAULT_FONT);
+        btnTinhDienTichHinhTron.setFont(DEFAULT_FONT);
+        btnTinhThanhTien.setFont(DEFAULT_FONT);
+        btnRectangleArea.setFont(DEFAULT_FONT);
+
         // Set preferred size for buttons
         Dimension buttonSize = new Dimension(300, 50);
         btnBac1Bac2.setPreferredSize(buttonSize);
@@ -32,6 +42,23 @@ public class MainMenu extends JFrame {
         btnTinhDienTichHinhTron.setPreferredSize(buttonSize);
         btnTinhThanhTien.setPreferredSize(buttonSize);
         btnRectangleArea.setPreferredSize(buttonSize);
+
+        // Add window close listener
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int choice = JOptionPane.showConfirmDialog(
+                    MainMenu.this,
+                    "Bạn có chắc muốn thoát chương trình?",
+                    "Xác nhận thoát",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+                );
+                if (choice == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
 
         btnBac1Bac2.addActionListener(e -> {
             try {
